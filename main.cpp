@@ -12,7 +12,7 @@ int main() {
 
     int x = 0;
 
-    if (alarm.alarmRunning()){
+    if (!alarm.alarmRunning()){
         alarm.alarmEvery();
         timerTest.start();
     }

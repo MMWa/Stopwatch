@@ -36,7 +36,7 @@ void alarmWatch::alarmEvery() {
 void alarmWatch::alarmKill() {
     //check if the thread is running and if so
     //join it
-    if(_runningFlag){
+    if(alarmRunning()){
         _runningFlag = !_runningFlag;
         if(!_alarmThread->joinable()){
             _alarmThread->join();
@@ -49,5 +49,5 @@ void alarmWatch::alarmKill() {
  * @return thread's joinable status, thus telling us if its working or not
  */
 bool alarmWatch::alarmRunning() {
-    return _alarmThread->joinable();
+    return !_alarmThread->joinable();
 }
