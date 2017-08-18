@@ -7,20 +7,23 @@ int main() {
 
     stopWatch timerTest{};
 
-    alarmWatch alarm{};
+    alarmWatch alarmFunc{};
 
-    std::cout << "thread Running: " << alarm.alarmRunning() << std::endl;
+    std::cout << "Pass Function test: " << std::endl;
 
-    if (!alarm.alarmRunning()){
-        alarm.alarmEvery();
+    if (!alarmFunc.alarmRunning()) {
+        alarmFunc.alarmEvery([]() {
+            std::cout << "hello lambda" << std::endl;
+        });
         timerTest.start();
     }
-    std::cout << alarm.alarmRunning() << std::endl;
+    std::cout << alarmFunc.alarmRunning() << std::endl;
 
-    while (alarm.alarmRunning()){}
+    while (alarmFunc.alarmRunning()) {}
     timerTest.stop();
 
-    alarm.alarmKill();
+    alarmFunc.alarmKill();
+
     std::cout << timerTest.get_elapsed().count() << std::endl;
 
     return 0;

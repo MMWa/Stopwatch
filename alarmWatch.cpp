@@ -9,8 +9,11 @@ using namespace std::chrono_literals;
 
 alarmWatch::alarmWatch() : _runningFlag(false) {}
 
-//TODO: pass function and interval time
-void alarmWatch::alarmEvery() {
+//TODO: pass function with parameters
+//TODO: pass interval time
+//TODO: pass repeat iterations
+void alarmWatch::alarmEvery(std::function<void()> callableFunc) {
+    _callableFunc = callableFunc;
     _runningFlag = true;
     _alarmThread = new std::thread(
             [this]() {
@@ -21,7 +24,7 @@ void alarmWatch::alarmEvery() {
                         return;
                     }
                     std::this_thread::sleep_for(100us);
-
+                    _callableFunc();
                     x++;
 
                     //Quick Test - stops after 5 iterations

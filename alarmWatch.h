@@ -14,12 +14,15 @@ class alarmWatch {
 public:
     alarmWatch();
     //alarmWatch(const stopWatch &internalTimer);
-    void alarmEvery();
+    void alarmEvery(std::function<void()> callableFunc);
     void alarmKill();
     bool alarmRunning();
 
 private:
-    stopWatch internalTimer;
+    std::function<void()> _callableFunc;
+
+    int _parameter;
+
     std::thread *_alarmThread;
     std::atomic<bool> _runningFlag;
 
