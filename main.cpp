@@ -16,8 +16,8 @@ int main() {
         alarm.alarmEvery();
         timerTest.start();
     }
-    while ( x < 100000000){
-        //std::cout << " hey "<< x << std::endl;
+    while ( x < 100000){
+        std::cout << " hey "<< x << std::endl;
         x++;
     }
     timerTest.stop();

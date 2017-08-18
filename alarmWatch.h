@@ -21,7 +21,7 @@ public:
 private:
     stopWatch internalTimer;
     std::thread *_alarmThread;
-    std::atomic<bool> _running;
+    std::atomic<bool> _runningFlag;
 
 };
 

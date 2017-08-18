@@ -4,17 +4,19 @@
 
 #include <iostream>
 #include "alarmWatch.h"
+
 using namespace std::chrono_literals;
 
-alarmWatch::alarmWatch() : _running(false) {
-}
+alarmWatch::alarmWatch() : _runningFlag(false) {}
+
 void alarmWatch::alarmEvery() {
-    _running = true;
+
+    _runningFlag = true;
     _alarmThread = new std::thread(
             [this]() {
                 int x=0;
                 while(true){
-                    if (!_running){
+                    if (!_runningFlag){
                         std::cout << "killed by _" << std::endl;
                         return;
                     }
@@ -28,13 +30,16 @@ void alarmWatch::alarmEvery() {
 }
 
 void alarmWatch::alarmKill() {
-    if(_running){
-        _running = !_running;
+    //check if the thread is running and if so
+    //join it
+    if(_runningFlag){
+        _runningFlag = !_runningFlag;
         if(!_alarmThread->joinable()){
             _alarmThread->join();
         }
     }
 }
+
 
 bool alarmWatch::alarmRunning() {
     return _alarmThread->joinable();
