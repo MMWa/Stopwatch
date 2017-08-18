@@ -9,21 +9,18 @@ int main() {
 
     alarmWatch alarm{};
 
-
-    int x = 0;
+    std::cout << "thread Running: " << alarm.alarmRunning() << std::endl;
 
     if (!alarm.alarmRunning()){
         alarm.alarmEvery();
         timerTest.start();
     }
-    while ( x < 100000){
-        std::cout << " hey "<< x << std::endl;
-        x++;
-    }
+    std::cout << alarm.alarmRunning() << std::endl;
+
+    while (alarm.alarmRunning()){}
     timerTest.stop();
 
     alarm.alarmKill();
-
     std::cout << timerTest.get_elapsed().count() << std::endl;
 
     return 0;

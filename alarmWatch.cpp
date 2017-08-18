@@ -9,21 +9,26 @@ using namespace std::chrono_literals;
 
 alarmWatch::alarmWatch() : _runningFlag(false) {}
 
+//TODO: pass function and interval time
 void alarmWatch::alarmEvery() {
-
     _runningFlag = true;
     _alarmThread = new std::thread(
             [this]() {
                 int x=0;
                 while(true){
                     if (!_runningFlag){
-                        std::cout << "killed by _" << std::endl;
+                        _runningFlag = !_runningFlag;
                         return;
                     }
-                    std::this_thread::sleep_for(1ms);
+                    std::this_thread::sleep_for(100us);
 
                     x++;
+
+                    //Quick Test - stops after 5 iterations
                     std::cout << "x is: " << x << std::endl;
+                    if (x == 5){
+                        _runningFlag = !_runningFlag;
+                    }
 
                 }
             });
@@ -38,7 +43,8 @@ void alarmWatch::alarmKill() {
     //join it
     if(alarmRunning()){
         _runningFlag = !_runningFlag;
-        if(!_alarmThread->joinable()){
+
+        if(_alarmThread->joinable()){
             _alarmThread->join();
         }
     }
@@ -49,5 +55,5 @@ void alarmWatch::alarmKill() {
  * @return thread's joinable status, thus telling us if its working or not
  */
 bool alarmWatch::alarmRunning() {
-    return !_alarmThread->joinable();
+    return _runningFlag;
 }
