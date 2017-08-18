@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <utility>
 #include "alarmWatch.h"
 
 using namespace std::chrono_literals;
@@ -13,7 +14,7 @@ alarmWatch::alarmWatch() : _runningFlag(false) {}
 //TODO: pass interval time
 //TODO: pass repeat iterations
 void alarmWatch::alarmEvery(std::function<void()> callableFunc) {
-    _callableFunc = callableFunc;
+    _callableFunc = std::move(callableFunc);
     _runningFlag = true;
     _alarmThread = new std::thread(
             [this]() {
