@@ -10,7 +10,7 @@ stopWatch::stopWatch() : _runningFlag(false) {}
 /*!
  * stores current time position and sets runningFlag
  */
-void stopWatch::start() {
+void stopWatch::startWatch() {
     _runningFlag = true;
     _startTime = std::chrono::steady_clock::now();
 }
@@ -19,7 +19,7 @@ void stopWatch::start() {
  * resets the start time to current time
  * if stopwatch is running
  */
-void stopWatch::restart() {
+void stopWatch::restartWatch() {
     if (_runningFlag == true){
         _stopTime = std::chrono::steady_clock::now();
         _elapsed = _stopTime - _startTime;
@@ -30,7 +30,7 @@ void stopWatch::restart() {
 /*!
  * stops the stopwatch
  */
-void stopWatch::stop() {
+void stopWatch::watchStop() {
     _stopTime = std::chrono::steady_clock::now();
     _elapsed = _stopTime - _startTime;
     _runningFlag = false;

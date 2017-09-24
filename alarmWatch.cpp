@@ -11,7 +11,9 @@ class duration;
 
 using namespace std::chrono_literals;
 
-alarmWatch::alarmWatch() : _runningFlag(false) {}
+alarmWatch::alarmWatch() : _runningFlag(false) {
+    stopWatch();
+}
 
 void alarmWatch::alarmEvery(int repeats, std::chrono::duration<float, std::ratio<1, 100000000>> __timeD,
                             std::function<void()> callableFunc) {
@@ -25,19 +27,17 @@ void alarmWatch::alarmEvery(int repeats, std::chrono::duration<float, std::ratio
     _alarmThread = new std::thread(
 
             [this, __timeD, repeats]() {
-                while (true) {
+                while (_runningFlag) {
+                    startWatch();
                     for (int x = 0; x <= repeats; x++) {
-                        if (!_runningFlag) {
-                            _runningFlag = !_runningFlag;
-                            return;
-                        }
-
                         std::this_thread::sleep_for(__timeD);
                         _callableFunc();
-                        //Quick Test - stops after 5 iterations
-                        //std::cout << "x is: " << x << std::endl;
-
+                        if (!_runningFlag) {
+                            watchStop();
+                            return;
+                        }
                     }
+                    watchStop();
                     _runningFlag = !_runningFlag;
 
                 }

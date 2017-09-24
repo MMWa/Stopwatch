@@ -11,10 +11,10 @@
 #include <functional>
 #include "stopWatch.h"
 
-class alarmWatch {
+class alarmWatch : public stopWatch {
 public:
-    alarmWatch();
 
+    alarmWatch();
     void alarmEvery(int, std::chrono::duration<float, std::ratio<1, 100000000>>, std::function<void()> callableFunc);
 
     void alarmKill();
@@ -23,9 +23,6 @@ public:
 private:
 
     std::function<void()> _callableFunc;
-
-    int _parameter;
-
     std::thread *_alarmThread;
     std::atomic<bool> _runningFlag;
 

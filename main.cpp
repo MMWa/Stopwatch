@@ -6,25 +6,32 @@ using namespace std::chrono_literals;
 
 int main() {
 
-    stopWatch timerTest{};
-
     alarmWatch alarmFunc{};
-
     std::cout << "Pass Function test: " << std::endl;
 
+    //test use 1
     if (!alarmFunc.alarmRunning()) {
-        alarmFunc.alarmEvery(50, 20ms, []() {
+        //takes number of iterations and period
+        //feed it a function or a lambda
+        alarmFunc.alarmEvery(20000, 20ms, []() {
             std::cout << "hello lambda" << std::endl;
         });
-        timerTest.start();
     }
-
-    while (alarmFunc.alarmRunning()) {}
-    timerTest.stop();
-
+    //make thread sleep for less that operation time to prove its stoppable
+    std::this_thread::sleep_for(2s);
+    //use the kill function to stop
     alarmFunc.alarmKill();
+    //output elapsed time
+    std::cout << alarmFunc.get_elapsed().count() << std::endl;
 
-    std::cout << timerTest.get_elapsed().count() << std::endl;
 
+    //test use 2
+    if (!alarmFunc.alarmRunning()) {
+        alarmFunc.alarmEvery(0, 20ms, []() {
+            std::cout << "hello lambda" << std::endl;
+        });
+    }
+    //wait till done executing
+    while (alarmFunc.alarmRunning()) {}
     return 0;
 }

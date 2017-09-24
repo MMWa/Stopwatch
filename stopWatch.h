@@ -10,10 +10,14 @@
 
 class stopWatch {
 public:
+
     stopWatch();
-    void start();
-    void restart();
-    void stop();
+
+    void startWatch();
+
+    void restartWatch();
+
+    void watchStop();
 
     bool isRunning();
 
