@@ -13,13 +13,13 @@ public:
 
     stopWatch();
 
-    void startWatch();
+    void stopWatch_Start();
 
-    void restartWatch();
+    void stopWatch_Stop();
 
-    void watchStop();
+    void stopWatch_Restart();
 
-    bool isRunning();
+    bool stopWatch_isRunning();
 
     const std::chrono::duration<double> &get_elapsed() const;
     std::chrono::duration<double> get_runTime();

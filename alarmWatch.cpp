@@ -26,16 +26,16 @@ void alarmWatch::alarmEvery(int repeats, std::chrono::duration<float, std::ratio
 
             [this, __timeD, repeats]() {
                 while (_runningFlag) {
-                    startWatch();
+                    stopWatch_Start();
                     for (int x = 0; x <= repeats; x++) {
                         std::this_thread::sleep_for(__timeD);
                         _callableFunc();
                         if (!_runningFlag) {
-                            watchStop();
+                            stopWatch_Stop();
                             return;
                         }
                     }
-                    watchStop();
+                    stopWatch_Stop();
                     _runningFlag = !_runningFlag;
 
                 }
