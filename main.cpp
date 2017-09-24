@@ -11,14 +11,17 @@ int main() {
 
     //test use 1
     if (!alarmFunc.alarmRunning()) {
+        int x = 0;
         //takes number of iterations and period
         //feed it a function or a lambda
-        alarmFunc.alarmEvery(20000, 20ms, []() {
-            std::cout << "hello lambda" << std::endl;
+        alarmFunc.alarmEvery(20000, 100ms, [&x]() {
+            std::cout << "hello lambda " << x << std::endl;
+            x++;
         });
     }
     //make thread sleep for less that operation time to prove its stoppable
     std::this_thread::sleep_for(2s);
+
     //use the kill function to stop
     alarmFunc.alarmKill();
     //output elapsed time
