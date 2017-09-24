@@ -25,7 +25,6 @@ void alarmWatch::alarmEvery(int repeats, std::chrono::duration<float, std::ratio
     _alarmThread = new std::thread(
 
             [this, __timeD, repeats]() {
-                int x = 0;
                 while (true) {
                     for (int x = 0; x <= repeats; x++) {
                         if (!_runningFlag) {
