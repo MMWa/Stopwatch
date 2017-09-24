@@ -1,6 +1,7 @@
 #include <iostream>
 #include "stopWatch.h"
 #include "alarmWatch.h"
+
 using namespace std::chrono_literals;
 
 int main() {
@@ -12,12 +13,11 @@ int main() {
     std::cout << "Pass Function test: " << std::endl;
 
     if (!alarmFunc.alarmRunning()) {
-        alarmFunc.alarmEvery([]() {
+        alarmFunc.alarmEvery(50, 20ms, []() {
             std::cout << "hello lambda" << std::endl;
         });
         timerTest.start();
     }
-    std::cout << alarmFunc.alarmRunning() << std::endl;
 
     while (alarmFunc.alarmRunning()) {}
     timerTest.stop();

@@ -4,35 +4,42 @@
 
 #include <iostream>
 #include <utility>
+#include <unordered_map>
 #include "alarmWatch.h"
+
+class duration;
 
 using namespace std::chrono_literals;
 
 alarmWatch::alarmWatch() : _runningFlag(false) {}
 
-//TODO: pass function with parameters
-//TODO: pass interval time
-//TODO: pass repeat iterations
-void alarmWatch::alarmEvery(std::function<void()> callableFunc) {
+void alarmWatch::alarmEvery(int repeats, std::chrono::duration<float, std::ratio<1, 100000000>> __timeD,
+                            std::function<void()> callableFunc) {
+    //catch if we call for zero duration
+    if (__timeD <= __timeD.zero()) {
+        return;
+    }
+
     _callableFunc = std::move(callableFunc);
     _runningFlag = true;
     _alarmThread = new std::thread(
-            [this]() {
-                int x=0;
-                while(true){
-                    if (!_runningFlag){
-                        _runningFlag = !_runningFlag;
-                        return;
-                    }
-                    std::this_thread::sleep_for(100us);
-                    _callableFunc();
-                    x++;
 
-                    //Quick Test - stops after 5 iterations
-                    std::cout << "x is: " << x << std::endl;
-                    if (x == 5){
-                        _runningFlag = !_runningFlag;
+            [this, __timeD, repeats]() {
+                int x = 0;
+                while (true) {
+                    for (int x = 0; x <= repeats; x++) {
+                        if (!_runningFlag) {
+                            _runningFlag = !_runningFlag;
+                            return;
+                        }
+
+                        std::this_thread::sleep_for(__timeD);
+                        _callableFunc();
+                        //Quick Test - stops after 5 iterations
+                        //std::cout << "x is: " << x << std::endl;
+
                     }
+                    _runningFlag = !_runningFlag;
 
                 }
             });
@@ -45,10 +52,10 @@ void alarmWatch::alarmEvery(std::function<void()> callableFunc) {
 void alarmWatch::alarmKill() {
     //check if the thread is running and if so
     //join it
-    if(alarmRunning()){
+    if (alarmRunning()) {
         _runningFlag = !_runningFlag;
 
-        if(_alarmThread->joinable()){
+        if (_alarmThread->joinable()) {
             _alarmThread->join();
         }
     }

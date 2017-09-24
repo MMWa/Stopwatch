@@ -8,17 +8,20 @@
 
 #include <thread>
 #include <atomic>
+#include <functional>
 #include "stopWatch.h"
 
 class alarmWatch {
 public:
     alarmWatch();
-    //alarmWatch(const stopWatch &internalTimer);
-    void alarmEvery(std::function<void()> callableFunc);
+
+    void alarmEvery(int, std::chrono::duration<float, std::ratio<1, 100000000>>, std::function<void()> callableFunc);
+
     void alarmKill();
     bool alarmRunning();
 
 private:
+
     std::function<void()> _callableFunc;
 
     int _parameter;
