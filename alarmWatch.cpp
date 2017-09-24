@@ -7,8 +7,6 @@
 #include <unordered_map>
 #include "alarmWatch.h"
 
-class duration;
-
 using namespace std::chrono_literals;
 
 alarmWatch::alarmWatch() : _runningFlag(false) {
