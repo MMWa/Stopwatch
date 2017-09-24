@@ -16,15 +16,18 @@ public:
 
     alarmWatch();
     void alarmEvery(int, std::chrono::duration<float, std::ratio<1, 100000000>>, std::function<void()> callableFunc);
-
     void alarmKill();
     bool alarmRunning();
 
+    void whenDone(std::function<void()> callableFunc);
+
+    void whenDoneClear();
+
 private:
 
-    std::function<void()> _callableFunc;
+    std::function<void()> _callableFunc, _whenDone;
     std::thread *_alarmThread;
-    std::atomic<bool> _runningFlag;
+    std::atomic<bool> _runningFlag, _whenDoneFlag;
 
 };
 

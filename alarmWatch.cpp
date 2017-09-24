@@ -2,16 +2,10 @@
 // Created by wahba on 18/08/17.
 //
 
-#include <iostream>
-#include <utility>
-#include <unordered_map>
 #include "alarmWatch.h"
 
-using namespace std::chrono_literals;
 
-alarmWatch::alarmWatch() : _runningFlag(false) {
-    stopWatch();
-}
+alarmWatch::alarmWatch() : _runningFlag(false), _whenDoneFlag(false) {}
 
 void alarmWatch::alarmEvery(int repeats, std::chrono::duration<float, std::ratio<1, 100000000>> __timeD,
                             std::function<void()> callableFunc) {
@@ -35,11 +29,19 @@ void alarmWatch::alarmEvery(int repeats, std::chrono::duration<float, std::ratio
                             return;
                         }
                     }
+                    if (_whenDoneFlag) {
+                        _whenDone();
+                    }
                     stopWatch_Stop();
                     _runningFlag = !_runningFlag;
 
                 }
             });
+}
+
+void alarmWatch::whenDone(std::function<void()> callableFunc) {
+    _whenDone = std::move(callableFunc);
+    _whenDoneFlag = true;
 }
 
 /*!
@@ -64,4 +66,8 @@ void alarmWatch::alarmKill() {
  */
 bool alarmWatch::alarmRunning() {
     return _runningFlag;
+}
+
+void alarmWatch::whenDoneClear() {
+    _whenDoneFlag = false;
 }

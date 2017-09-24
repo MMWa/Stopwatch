@@ -26,11 +26,20 @@ int main() {
 
 
     //test use 2
-    if (!alarmFunc.alarmRunning()) {
-        alarmFunc.alarmEvery(0, 20ms, []() {
-            std::cout << "hello lambda" << std::endl;
-        });
-    }
+    alarmFunc.whenDone(
+            []() {
+                std::cout << "Done with program" << std::endl;
+            }
+    );
+
+    alarmFunc.alarmEvery(
+            0, 20ms, []() {
+                std::cout << "hello lambda for once" << std::endl;
+            }
+    );
+
+
+
     //wait till done executing
     while (alarmFunc.alarmRunning()) {}
     return 0;
