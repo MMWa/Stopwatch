@@ -20,8 +20,9 @@ public:
     bool alarmRunning();
 
     void whenDone(std::function<void()> callableFunc);
-
     void whenDoneClear();
+
+    bool whenDoneSet();
 
 private:
 

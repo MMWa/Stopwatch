@@ -27,23 +27,33 @@ int main() {
     //use the kill function to stop
     alarmFunc.alarmKill();
     //output elapsed time
-    std::cout << alarmFunc.get_elapsed().count() << std::endl;
+    std::cout << "Elapsed time: " << alarmFunc.get_elapsed().count() << std::endl;
 
 
     //test use 2
+    if (alarmFunc.whenDoneSet()) {
+        std::cout << "when done Function set" << std::endl;
+    } else {
+        std::cout << "when done Function not set" << std::endl;
+    }
+
     alarmFunc.whenDone(
             []() {
-                std::cout << "Done with program" << std::endl;
+                std::cout << "when done function called" << std::endl;
             }
     );
+
+    if (alarmFunc.whenDoneSet()) {
+        std::cout << "when done Function set" << std::endl;
+    } else {
+        std::cout << "when done Function not set" << std::endl;
+    }
 
     alarmFunc.alarmEvery(
             0, 20ms, []() {
                 std::cout << "hello lambda for once" << std::endl;
             }
     );
-
-
 
     //wait till done executing
     while (alarmFunc.alarmRunning()) {}
