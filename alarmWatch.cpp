@@ -12,6 +12,7 @@ alarmWatch::alarmWatch() : _runningFlag(false), _whenDoneFlag(false) {}
  * @param repeats the number of times the alarm is to run
  * @param __timeD the frequency at which the alarm function is called
  * @param callableFunc function to be called at every iteration
+ * for now always pass a void
  */
 void alarmWatch::alarmEvery(int repeats, std::chrono::duration<float, std::ratio<1, 100000000>> __timeD,
                             std::function<void()> callableFunc) {
