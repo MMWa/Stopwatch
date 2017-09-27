@@ -44,8 +44,9 @@ bool stopWatch::stopWatch_isRunning() {
  * get the last elapsed time
  * @return the last start - stop duration
  */
-const std::chrono::duration<double> &stopWatch::get_elapsed() const {
-    return _elapsed;
+std::chrono::duration<double> &stopWatch::get_elapsed() {
+    _stopTime = std::chrono::steady_clock::now();
+    return _elapsed = _stopTime - _startTime;
 }
 
 /*!
@@ -54,7 +55,7 @@ const std::chrono::duration<double> &stopWatch::get_elapsed() const {
  */
 std::chrono::duration<double> stopWatch::get_runTime() {
     if (_runningFlag){
-        return _stopTime - _startTime;
+        return std::chrono::steady_clock::now() - _startTime;
     } else {
         return std::chrono::microseconds(0);
     }

@@ -3,6 +3,7 @@
 #include "stopWatch.h"
 #include "alarmWatch.h"
 
+
 using namespace std::chrono_literals;
 
 int main() {
@@ -15,7 +16,8 @@ int main() {
         int x = 0;
         //takes number of iterations and period
         //feed it a function or a lambda
-        alarmFunc.alarmEvery(20000, 100ms, [&x]() {
+        alarmFunc.alarmEvery(5, 1s, [&x]() {
+            //std::this_thread::sleep_for(2ms);
             std::cout << "hello lambda " << x << std::endl;
             x++;
         });
@@ -25,9 +27,10 @@ int main() {
     std::this_thread::sleep_for(2s);
 
     //use the kill function to stop
-    alarmFunc.alarmKill();
+    //alarmFunc.alarmKill();
     //output elapsed time
-    std::cout << "Elapsed time: " << alarmFunc.get_elapsed().count() << std::endl;
+    while (alarmFunc.alarmRunning()) {}
+    std::cout << "Elapsed time: " << alarmFunc.get_runTime().count() << std::endl;
 
 
     //test use 2

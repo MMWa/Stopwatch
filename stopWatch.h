@@ -21,7 +21,7 @@ public:
 
     bool stopWatch_isRunning();
 
-    const std::chrono::duration<double> &get_elapsed() const;
+    std::chrono::duration<double> &get_elapsed();
     std::chrono::duration<double> get_runTime();
 private:
     bool _runningFlag;

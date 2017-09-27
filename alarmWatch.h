@@ -25,10 +25,10 @@ public:
     bool whenDoneSet();
 
 private:
-
+    void __Kill();
     std::function<void()> _callableFunc, _whenDone;
     std::thread *_alarmThread;
-    std::atomic<bool> _runningFlag, _whenDoneFlag;
+    std::atomic<bool> _thread_runningFlag, _whenDoneFlag;
 
 };
 
